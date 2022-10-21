@@ -21,6 +21,7 @@ JWT_ACCESS_SECRET = 'accessTokenSecret'
 JWT_REFRESH_SECRET = 'refreshTokenSecret'
 ACCESS_EXPIRES_IN = '15m'
 REFRESH_EXPIRES_IN = '7d'
+PORT = '1990'
 ```
 
 ## Installation
