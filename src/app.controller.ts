@@ -1,24 +1,17 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AppService } from './app.service';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthService } from './auth/auth.service';
+import { LocalAuthGuard } from './auth/local-auth.guard';
 
 @ApiTags('main')
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @ApiOperation({ summary: 'get hello string' })
-  @ApiResponse({ status: 200, description: 'get success', type: String })
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
+  constructor(private readonly authService: AuthService) {}
 
   @ApiOperation({ summary: 'signin' })
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(LocalAuthGuard)
   @Post('auth/signin')
   async signin(@Request() req) {
-    return req.user;
+    return this.authService.signin(req.user);
   }
 }
